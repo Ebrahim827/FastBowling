@@ -1,0 +1,110 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  @apply bg-pitch-950 text-cream font-body;
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(210, 162, 76, 0.08), transparent),
+    radial-gradient(ellipse 60% 40% at 90% 100%, rgba(168, 50, 31, 0.06), transparent);
+  background-attachment: fixed;
+}
+
+/* Visible keyboard focus everywhere - accessibility floor from the design brief */
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible {
+  outline: 2px solid #D2A24C;
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* ===== Ball-hits-stumps hero background animation ===== */
+/* Single 5.5s loop: ball flies in and knocks the bails off, then resets. */
+
+@keyframes ball-flight {
+  0%   { transform: translate(-420px, -60px) rotate(0deg); opacity: 1; }
+  62%  { transform: translate(0px, 0px) rotate(35deg); opacity: 1; }
+  64%  { transform: translate(6px, 2px) rotate(45deg); opacity: 0; }
+  100% { transform: translate(6px, 2px) rotate(45deg); opacity: 0; }
+}
+
+@keyframes impact-flash {
+  0%, 60% { opacity: 0; transform: scale(0.4); }
+  63%     { opacity: 0.9; transform: scale(1.3); }
+  72%     { opacity: 0; transform: scale(2); }
+  100%    { opacity: 0; transform: scale(2); }
+}
+
+@keyframes bail-left-fly {
+  0%, 61%  { transform: translate(0, 0) rotate(0deg); opacity: 1; }
+  100%     { transform: translate(-70px, -90px) rotate(-260deg); opacity: 0; }
+}
+
+@keyframes bail-right-fly {
+  0%, 62%  { transform: translate(0, 0) rotate(0deg); opacity: 1; }
+  100%     { transform: translate(85px, -70px) rotate(300deg); opacity: 0; }
+}
+
+@keyframes stump-shake {
+  0%, 61%  { transform: rotate(0deg); }
+  64%      { transform: rotate(-4deg); }
+  68%      { transform: rotate(3deg); }
+  72%      { transform: rotate(-1deg); }
+  76%, 100%{ transform: rotate(0deg); }
+}
+
+.anim-ball       { animation: ball-flight 8s cubic-bezier(0.3, 0.6, 0.4, 1) infinite; transform-origin: center; }
+.anim-flash      { animation: impact-flash 8s ease-out infinite; transform-origin: center; }
+.anim-bail-left  { animation: bail-left-fly 8s ease-out infinite; transform-origin: left center; }
+.anim-bail-right { animation: bail-right-fly 8s ease-out infinite; transform-origin: right center; }
+.anim-stump-mid  { animation: stump-shake 8s ease-out infinite; transform-origin: bottom center; }
+
+@keyframes trajectory-draw {
+  0%   { stroke-dashoffset: 425; opacity: 0; }
+  3%   { opacity: 0.55; }
+  62%  { stroke-dashoffset: 0; opacity: 0.55; }
+  72%  { opacity: 0; }
+  100% { opacity: 0; stroke-dashoffset: 425; }
+}
+.anim-trajectory { stroke-dasharray: 425; animation: trajectory-draw 8s cubic-bezier(0.3, 0.6, 0.4, 1) infinite; }
+
+/* ===== 3D raised buttons - Speed Check's primary action buttons ===== */
+.btn-3d {
+  transition: transform 0.07s ease, box-shadow 0.07s ease;
+  transform: translateY(0);
+}
+.btn-3d-blue {
+  background: linear-gradient(180deg, #2563EB, #1D4ED8);
+  box-shadow: 0 3px 0 #0F2A73, 0 5px 9px rgba(0,0,0,0.45);
+}
+.btn-3d-blue:active {
+  transform: translateY(3px);
+  box-shadow: 0 0px 0 #0F2A73, 0 1px 3px rgba(0,0,0,0.45);
+}
+.btn-3d-yellow {
+  background: linear-gradient(180deg, #FFE400, #FFD000);
+  box-shadow: 0 3px 0 #B38F00, 0 5px 9px rgba(0,0,0,0.45);
+}
+.btn-3d-yellow:active {
+  transform: translateY(3px);
+  box-shadow: 0 0px 0 #B38F00, 0 1px 3px rgba(0,0,0,0.45);
+}
+.btn-3d-upload {
+  background: linear-gradient(135deg, #22D3EE, #6366F1 55%, #A855F7);
+  box-shadow: 0 6px 0 #4C1D95, 0 10px 20px rgba(0,0,0,0.5);
+  transition: transform 0.08s ease, box-shadow 0.08s ease;
+}
+.btn-3d-upload:active {
+  transform: translateY(5px);
+  box-shadow: 0 1px 0 #4C1D95, 0 2px 6px rgba(0,0,0,0.5);
+}

@@ -1,0 +1,2 @@
+video,view,timestamp,bowling_arm,shoulder_alignment_angle_release_deg,front_foot_alignment_note
+20240517_190145.mp4,back,2026-08-28T21:02:44,right,159.4564208984375,"Not measurable with the current pose model - no toe/foot-orientation keypoint available, only a single ankle point. Would need a custom foot-keypoint model or bounding-box-orientation approach."
