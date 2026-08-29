@@ -1,3 +1,5 @@
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch==2.3.0+cpu
 fastapi
 uvicorn[standard]
 sqlalchemy
@@ -7,6 +9,6 @@ bcrypt
 python-jose[cryptography]
 python-multipart
 ultralytics
-opencv-python
+opencv-python-headless
 numpy
 matplotlib
