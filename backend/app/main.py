@@ -116,7 +116,7 @@ def rename_delivery(
     }    
 
 
-@app.post("/signup", response_model=TokenResponse)
+@app.post("/api/signup", response_model=TokenResponse)
 def signup(payload: SignupRequest, db: Session = Depends(get_db)):
     existing = db.query(User).filter(User.username == payload.username).first()
     if existing:
@@ -139,7 +139,7 @@ def signup(payload: SignupRequest, db: Session = Depends(get_db)):
     return TokenResponse(access_token=token, role=user.role, username=user.username)
 
 
-@app.post("/login", response_model=TokenResponse)
+@app.post("/api/login", response_model=TokenResponse)
 def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
     user = db.query(User).filter(User.username == form_data.username).first()
     if not user or not verify_password(form_data.password, user.hashed_password):
@@ -198,7 +198,7 @@ def _run_analysis_job(delivery_id: int, video_path: str, view: str, output_dir: 
         db.close()
 
 
-@app.post("/analyze", response_model=DeliverySummary)
+@app.post("/api/analyze", response_model=DeliverySummary)
 def analyze(
     background_tasks: BackgroundTasks,
     file: UploadFile = File(...),
