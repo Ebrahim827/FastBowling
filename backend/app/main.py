@@ -43,7 +43,7 @@ from sqlalchemy.orm import Session
 from .database import init_db, get_db, User, Delivery, SessionLocal
 from .auth import hash_password, verify_password, create_access_token, get_current_user, require_coach
 from .schemas import SignupRequest, TokenResponse, DeliverySummary, DeliveryDetail
-from .run_pipeline import analyze_video
+
 
 UPLOAD_ROOT = os.path.join(os.path.dirname(__file__), "..", "uploads")
 os.makedirs(UPLOAD_ROOT, exist_ok=True)
@@ -154,6 +154,7 @@ def _run_analysis_job(delivery_id: int, video_path: str, view: str, output_dir: 
     actually calls the (potentially slow, CPU-bound) pose-detection
     pipeline, so the upload request itself returns immediately instead
     of the user's browser hanging for however long processing takes."""
+    from .run_pipeline import analyze_video
     db = SessionLocal()
     try:
         result = analyze_video(video_path, view=view, output_dir=output_dir)
