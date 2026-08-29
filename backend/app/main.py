@@ -40,10 +40,10 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 
-from database import init_db, get_db, User, Delivery, SessionLocal
-from auth import hash_password, verify_password, create_access_token, get_current_user, require_coach
-from schemas import SignupRequest, TokenResponse, DeliverySummary, DeliveryDetail
-from run_pipeline import analyze_video
+from .database import init_db, get_db, User, Delivery, SessionLocal
+from .auth import hash_password, verify_password, create_access_token, get_current_user, require_coach
+from .schemas import SignupRequest, TokenResponse, DeliverySummary, DeliveryDetail
+from .run_pipeline import analyze_video
 
 UPLOAD_ROOT = os.path.join(os.path.dirname(__file__), "..", "uploads")
 os.makedirs(UPLOAD_ROOT, exist_ok=True)

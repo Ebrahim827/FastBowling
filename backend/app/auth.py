@@ -17,7 +17,7 @@ from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.orm import Session
 
-from database import get_db, User
+from .database import get_db, User
 
 SECRET_KEY = os.environ.get("BOWLING_APP_SECRET_KEY", "dev-only-change-this-before-deploying")
 ALGORITHM = "HS256"

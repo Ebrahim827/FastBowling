@@ -56,14 +56,14 @@ matplotlib.use("Agg")  # non-interactive backend - MUST be set before importing
                         # worker thread (as it is here under the web server).
 import matplotlib.pyplot as plt
 from ultralytics import YOLO
-from skeleton_utils import (
+from .skeleton_utils import (
     draw_skeleton, draw_front_leg_brace_guide, despike_keypoints,
     track_limb_side_by_position, apply_limb_side_correction,
     find_planted_side, find_fastest_side,
 )
-import skeleton_utils as su
-import fault_detection as fd
-import fault_detection_front_back as fdfb
+from . import skeleton_utils as su
+from . import fault_detection as fd
+from . import fault_detection_front_back as fdfb
 
 LEFT_WRIST, RIGHT_WRIST = 9, 10
 LEFT_ELBOW, RIGHT_ELBOW = 7, 8
