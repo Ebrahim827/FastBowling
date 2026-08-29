@@ -46,7 +46,11 @@ from .schemas import SignupRequest, TokenResponse, DeliverySummary, DeliveryDeta
 
 
 UPLOAD_ROOT = os.path.join(os.path.dirname(__file__), "..", "uploads")
-os.makedirs(UPLOAD_ROOT, exist_ok=True)
+try:
+    os.makedirs(UPLOAD_ROOT, exist_ok=True)
+except OSError:
+    UPLOAD_ROOT = "/tmp/uploads"
+    os.makedirs(UPLOAD_ROOT, exist_ok=True)
 
 app = FastAPI(title="Bowling Analysis API")
 
