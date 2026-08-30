@@ -71,7 +71,7 @@ init_db()
 app.mount("/files", StaticFiles(directory=UPLOAD_ROOT), name="files")
 
 
-@app.delete("/deliveries/{delivery_id}")
+@app.delete("/api/deliveries/{delivery_id}")
 def delete_delivery(delivery_id: int, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
     d = db.query(Delivery).filter(Delivery.id == delivery_id).first()
     if d is None:
@@ -87,7 +87,7 @@ def delete_delivery(delivery_id: int, db: Session = Depends(get_db), current_use
     db.commit()
     return {"deleted": True}
 
-@app.patch("/deliveries/{delivery_id}/rename")
+@app.patch("/api/deliveries/{delivery_id}/rename")
 def rename_delivery(
     delivery_id: int,
     payload: dict,
@@ -243,13 +243,13 @@ def _delivery_to_summary(d: Delivery, owner_username: str = None) -> DeliverySum
     )
 
 
-@app.get("/deliveries", response_model=list[DeliverySummary])
+@app.get("/api/deliveries", response_model=list[DeliverySummary])
 def my_deliveries(db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
     deliveries = db.query(Delivery).filter(Delivery.owner_id == current_user.id).order_by(Delivery.created_at.desc()).all()
     return [_delivery_to_summary(d) for d in deliveries]
 
 
-@app.get("/deliveries/{delivery_id}", response_model=DeliveryDetail)
+@app.get("/api/deliveries/{delivery_id}", response_model=DeliveryDetail)
 def get_delivery(delivery_id: int, db: Session = Depends(get_db), current_user: User = Depends(get_current_user)):
     d = db.query(Delivery).filter(Delivery.id == delivery_id).first()
     if d is None:
@@ -266,19 +266,19 @@ def get_delivery(delivery_id: int, db: Session = Depends(get_db), current_user: 
     )
 
 
-@app.get("/coach/deliveries", response_model=list[DeliverySummary])
+@app.get("/api/coach/deliveries", response_model=list[DeliverySummary])
 def all_deliveries(db: Session = Depends(get_db), coach: User = Depends(require_coach)):
     deliveries = db.query(Delivery).order_by(Delivery.created_at.desc()).all()
     return [_delivery_to_summary(d, owner_username=d.owner.username) for d in deliveries]
 
 
-@app.get("/coach/users")
+@app.get("/api/coach/users")
 def all_users(db: Session = Depends(get_db), coach: User = Depends(require_coach)):
     users = db.query(User).all()
     return [{"id": u.id, "username": u.username, "role": u.role, "created_at": u.created_at,
              "delivery_count": len(u.deliveries)} for u in users]
 
 
-@app.get("/me")
+@app.get("/api/me")
 def me(current_user: User = Depends(get_current_user)):
     return {"id": current_user.id, "username": current_user.username, "role": current_user.role}

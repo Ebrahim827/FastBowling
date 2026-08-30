@@ -1,4 +1,4 @@
-const BASE = import.meta.env.VITE_API_URL || "/api"; 
+const BASE = import.meta.env.DEV ? "/api" : "https://your-backend-project.vercel.app/api"; 
 
 function getToken() {
   return localStorage.getItem("token");
